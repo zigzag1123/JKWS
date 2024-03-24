@@ -98,7 +98,7 @@ int main()
     EVP_PKEY_CTX_free(ctx);
 	string sqlinsert;
 	sqlite3 *db;
-	int rc = sqlite3_open("proj2.db", &db);
+	int rc = sqlite3_open("totally_not_my_private_keys.db", &db);
 	string err = 0;
 
 	if(rc)
@@ -188,7 +188,7 @@ int main()
 
     svr.listen("127.0.0.1", 8080);
 
-	sqlinsert = "insert into keys (key) values (" + extract_priv_key(EVP_PKEY *pkey) + ");";
+	sqlinsert = "insert into keys (key, exp) values (" + extract_priv_key(EVP_PKEY *pkey) + ", 1);";
 	rc = sqlite3_exec(db, sqlinsert, \0, 0, &err);
 	
     // Cleanup
